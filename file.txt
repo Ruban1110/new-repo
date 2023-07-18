@@ -1,4 +1,18 @@
-mvn clean install -Dskiptests=true
-mvn clean test
-mvn spring-boot:run
-mvn clean install -Djacoco.skip=true
+server.port=${SERVER_PORT:8080}
+spring.application.name=EEH MDP ACRS Sync Service
+
+# Swagger Configuration
+springdoc.openapidefinition.info.title=EEH MDP ACRS Sync Service
+springdoc.openapidefinition.info.desc=This project can be used to kickstart or be used as a reference to create other SpringBoot projects.
+springdoc.openapidefinition.info.version=1.0.0
+
+
+security.headers.uri.match.default.grant_type = {"authorization_code":{"headers.altConsumerId":"uri.altCust"}}
+
+
+resilience4j.retry.instances.inventory_type_acrs_api.max-attempts=4
+resilience4j.retry.instances.inventory_type_acrs_api.retryExceptions=java.lang.Exception
+resilience4j.retry.instances.inventory_type_acrs_api.waitDuration=10s
+
+apiInfoMap={"brand-retrieve-all":{"apiHost":"https://localhost:8080","uri":"/api/v1/brand"}}
+apiHeaderMap={"brand-retrieve-all":{"Authorization":"Basic ", "Content-Type":"application/json"}}
